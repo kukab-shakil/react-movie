@@ -22,10 +22,8 @@ class Counters extends Component {
         const counters =[...this.state.counters];
         const index = counters.indexOf(counter);
         counters[index]={...counter}
-        counters[index].value--;
-        this.setState(oldState => (
-            {counters:( oldState.counters > 0) ? (oldState.counters - 1) : 0 }
-        ))
+        counters[index].value = counters[index].value > 0 ? counters[index].value-1:0;
+        this.setState({counters})
     }
     handleDelete=(counterid)=>{
       const counters = this.state.counters.filter(m=>m.id !== counterid)
@@ -44,7 +42,7 @@ class Counters extends Component {
         
         return (
             <div>
-                <h1>{this.state.counters.reduce((a,b)=>({value:a.value+b.value})).value}</h1>
+                <h1>{this.state.counters.reduce((a,b)=>({value:a.value+b.value}),{value:0}).value}</h1>
                 <button onClick={this.handleReset} className="btn btn-secondary btn-sm">RESET</button>
            {this.state.counters.map(m=>
            <Counter key={m.id} 
